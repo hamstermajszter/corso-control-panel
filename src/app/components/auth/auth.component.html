@@ -1,0 +1,18 @@
+<div *ngIf="authService.isAuthenticated() ; else showLogin">
+    <p>Hello!</p>
+    <button (click)="logout()">Kilépés</button>
+</div>
+<ng-template #showLogin>
+
+  <label>
+    email:
+    <input type="email" [formControl]="email">
+  </label>
+
+  <label>
+    jelszó:
+    <input type="password" [formControl]="password">
+  </label>
+
+  <button (click)="login()">Belépés</button>
+</ng-template>
