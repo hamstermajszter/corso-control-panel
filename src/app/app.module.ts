@@ -14,6 +14,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { FoodComponent } from './components/food/food.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { AuthService } from './services/auth.service';
     AngularFirestoreModule,
     AngularFireStorageModule,
     RouterModule.forRoot(ROUTES, { useHash: false }),
+    BrowserAnimationsModule,
   ],
   declarations: [
     AppComponent,
