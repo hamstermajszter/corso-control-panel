@@ -1,3 +1,19 @@
-<p>
-  food works!
-</p>
+<div id="foods">
+  <form [formGroup]="form" (ngSubmit)="createFood()" class="new-food-form">
+    <mat-form-field>
+      <input id="food-name" matInput placeholder="Étel neve" [formControl]="form.controls.name">
+    </mat-form-field>
+    <mat-checkbox *ngFor="let allergen of form.controls.allergens.controls; let i = index">{{ allergens[i].name }}</mat-checkbox>
+    <button type="submit" mat-stroked-button color="accent">Új étel</button>
+  </form>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let food of foods | async">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{ food.name }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>

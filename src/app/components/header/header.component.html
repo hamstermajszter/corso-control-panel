@@ -1,0 +1,5 @@
+<mat-toolbar color="primary">
+  <span routerLink='/'>Corso</span>
+  <span class="spacer"></span>
+  <button *ngIf="authService.isAuthenticated()" mat-button (click)="onLogout()">Kilépés</button>
+</mat-toolbar>

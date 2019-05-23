@@ -3,16 +3,21 @@
     <button (click)="logout()">Kilépés</button>
 </div>
 <ng-template #showLogin>
+  <mat-card>
+    <mat-card-title>Belépés</mat-card-title>
+  <mat-card-content>
 
-  <label>
-    email:
-    <input type="email" [formControl]="email">
-  </label>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [formControl]="email">
+    </mat-form-field>
 
-  <label>
-    jelszó:
-    <input type="password" [formControl]="password">
-  </label>
+    <mat-form-field appearance="fill">
+      <mat-label>Jelszó</mat-label>
+      <input matInput type="password" [formControl]="password">
+    </mat-form-field>
 
-  <button (click)="login()">Belépés</button>
+    <button mat-raised-button color="primary" (click)="login()">Belépés</button>
+  </mat-card-content>
+  </mat-card>
 </ng-template>
