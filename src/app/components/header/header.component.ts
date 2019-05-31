@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthenticationService } from '@/services/auth.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { FoodDialogComponent } from '../foods/food-dialog/food-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +11,22 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
   }
 
-  onLogout() {
-
+  logout() {
+    this.authService.logout().then(() => this.router.navigate(['/login']));
   }
-
+  openNewFoodDialog(): void {
+    const dialogRef = this.dialog.open(FoodDialogComponent, {
+      width: '350px',
+      data: {food: {id: '', name: '', allergens: []}}
+    });
+  }
 }

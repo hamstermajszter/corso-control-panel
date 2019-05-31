@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="createFood()" class="new-food-form">
+  <mat-form-field>
+    <input id="food-name" matInput placeholder="Étel neve" [formControl]="form.controls.name" required>
+  </mat-form-field>
+  <mat-button-toggle-group [formControl]="form.controls.type" name="type" aria-label="Étel típusa" required>
+    <mat-button-toggle *ngFor="let type of foodTypes" value="{{type.key}}">{{type.value}}</mat-button-toggle>
+  </mat-button-toggle-group>
+  <div formArrayName="allergens"
+    *ngFor="let allergen of form.get('allergens').controls; let i = index;">
+    <div [formGroupName]="i">
+      <mat-checkbox formControlName="selected">{{ allergen.value.displayedName }}</mat-checkbox>
+    </div>
+  </div>
+  <mat-dialog-actions>
+    <button type="submit" mat-stroked-button>Mentés</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,17 @@
+<div id="foods">
+  <mat-accordion>
+    <mat-expansion-panel ngClass="{{food.type}}" [expanded]="expandedFood === food.id" (opened)="setExpandedFood(food.id)" *ngFor="let food of foods | async">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{ food.name }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-action-row>
+        <button mat-stroked-button color="primary" (click)="openFoodDialog(food)">Szerkeszt</button>
+        <button mat-raised-button color="warn" (click)="deleteFood(food.id)">Delete</button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

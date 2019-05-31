@@ -11,13 +11,26 @@ import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 import { AuthComponent } from './components/auth/auth.component';
-import { FoodComponent } from './components/food/food.component';
-import { AuthGuardService } from './services/auth-guard.service';
-import { AuthService } from './services/auth.service';
+import { FoodsComponent } from './components/foods/foods.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthenticationService } from './services/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatExpansionModule, MatCheckboxModule } from '@angular/material';
-import { HeaderComponent } from './components/header/header.component'
-
+import {
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule,
+  MatCardModule,
+  MatToolbarModule,
+  MatExpansionModule,
+  MatCheckboxModule,
+  MatSnackBarModule,
+  MatDialogModule,
+  MatButtonToggleModule
+} from '@angular/material';
+import { HeaderComponent } from './components/header/header.component';
+import { ErrorInterceptor } from './helpers/error.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FoodDialogComponent } from './components/foods/food-dialog/food-dialog.component';
 
 @NgModule({
   imports: [
@@ -38,18 +51,26 @@ import { HeaderComponent } from './components/header/header.component'
     MatCardModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSnackBarModule,
+    MatDialogModule,
+    MatButtonToggleModule
   ],
   declarations: [
     AppComponent,
     AuthComponent,
-    FoodComponent,
+    FoodsComponent,
     HeaderComponent,
+    FoodDialogComponent,
+  ],
+  entryComponents: [
+    FoodDialogComponent
   ],
   bootstrap: [ AppComponent ],
   providers: [
-    AuthService,
-    AuthGuardService
+    AuthenticationService,
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ]
 })
 export class AppModule {}

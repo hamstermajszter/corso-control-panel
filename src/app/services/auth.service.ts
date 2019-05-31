@@ -2,31 +2,30 @@ import { Injectable, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable()
-export class AuthService {
-
-  private authState: any;
+@Injectable({ providedIn: 'root' })
+export class AuthenticationService {
+  private authStatusSubject: BehaviorSubject<boolean>;
+  public authStatus: Observable<boolean>;
 
   constructor(public afAuth: AngularFireAuth) {
-    this.afAuth.authState.subscribe((auth) => {
-      this.authState = auth
-    });
+    this.authStatusSubject = new BehaviorSubject<boolean>(afAuth.auth.currentUser !== null);
+    this.authStatus = this.authStatusSubject.asObservable();
+    afAuth.authState.subscribe(user => {
+      this.authStatusSubject.next(user !== null);
+    })
   }
 
   public isAuthenticated(): boolean {
-    return this.authState !== null ;
+    return this.authStatusSubject.value;
   }
 
-  login(email: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.authState = user;
-      })
-      .catch(error => console.log(error));
+  login(email: string, password: string): Promise<firebase.auth.UserCredential> {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  logout() {
-    this.afAuth.auth.signOut().then(() => this.authState = false);
+  logout(): Promise<void> {
+    return this.afAuth.auth.signOut();
   }
 }

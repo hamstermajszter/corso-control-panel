@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthenticationService } from 'src/app/services/auth.service';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ export class AuthComponent {
   password = new FormControl('');
 
   constructor(
-    public authService: AuthService,
+    public authService: AuthenticationService,
     public router: Router
   ) {}
 
