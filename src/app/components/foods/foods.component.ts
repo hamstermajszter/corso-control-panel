@@ -30,8 +30,8 @@ export class FoodsComponent implements OnInit {
 
   constructor(
     private afs: AngularFirestore,
-    private snackBar: MatSnackBar,
     private foodService: FoodService,
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
     public dialog: MatDialog

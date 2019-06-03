@@ -25,12 +25,16 @@ import {
   MatCheckboxModule,
   MatSnackBarModule,
   MatDialogModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatDatepickerModule,
+  MAT_DATE_LOCALE,
+  DateAdapter,
+  MAT_DATE_FORMATS
 } from '@angular/material';
+import { MatMomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { HeaderComponent } from './components/header/header.component';
-import { ErrorInterceptor } from './helpers/error.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FoodDialogComponent } from './components/foods/food-dialog/food-dialog.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   imports: [
@@ -54,7 +58,9 @@ import { FoodDialogComponent } from './components/foods/food-dialog/food-dialog.
     MatToolbarModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatMomentDateModule
   ],
   declarations: [
     AppComponent,
@@ -62,6 +68,7 @@ import { FoodDialogComponent } from './components/foods/food-dialog/food-dialog.
     FoodsComponent,
     HeaderComponent,
     FoodDialogComponent,
+    MenuComponent,
   ],
   entryComponents: [
     FoodDialogComponent
@@ -70,7 +77,9 @@ import { FoodDialogComponent } from './components/foods/food-dialog/food-dialog.
   providers: [
     AuthenticationService,
     AuthGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: MAT_DATE_LOCALE, useValue: 'hu-HU'},
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ]
 })
 export class AppModule {}
