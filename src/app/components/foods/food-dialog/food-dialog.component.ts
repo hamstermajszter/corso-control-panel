@@ -5,6 +5,7 @@ import { Allergen } from '../foods.component';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import * as _ from 'lodash';
 import { Food, FoodType } from '@/models/food.model';
+import { FoodService } from '@/services/food.service';
 
 @Component({
   selector: 'app-new-food',
@@ -28,31 +29,27 @@ export class FoodDialogComponent implements OnInit {
 
   constructor(
     private afs: AngularFirestore,
+    private foodService: FoodService,
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<FoodDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {food: Food}
   ) {
     this.food = data.food;
-    this.foodCollection = afs.collection<Food>('foods');
     this.initFoodModelForm();
   }
 
   ngOnInit() {
   }
 
-  createFood() {
-    const id = this.food.id || this.afs.createId();
-    const selectedAllergens = _.filter(this.form.get('allergens').value as FormArray, allergen => allergen.selected);
-    const newFood: Food = {
-      id,
-      name: this.form.value.name,
-      type: this.form.value.type,
-      allergens: _.map(selectedAllergens, allergen => allergen.id
-    )};
+  saveFood() {
     if (this.form.valid) {
-      this.foodCollection.doc(id).set(newFood).then(() => {
-        this.snackBar.open(`${newFood.name} sikeresen hozzáadva!`, '', {
+      this.food.id = this.food.id || this.afs.createId();
+      this.food.name = this.form.value.name;
+      this.food.type = this.form.value.type;
+      this.food.allergens = _.filter(this.form.get('allergens').value as FormArray, allergen => allergen.selected);
+      this.foodService.saveFood(this.food).then(() => {
+        this.snackBar.open(`${this.food.name} sikeresen hozzáadva!`, '', {
           duration: 3000
         });
         this.dialogRef.close();

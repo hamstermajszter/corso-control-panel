@@ -1,10 +1,69 @@
 <div id="menu">
   <mat-form-field>
-    <input matInput [matDatepicker]="dp" placeholder="Moment.js datepicker" [formControl]="date" (dateChange)="dateChange($event)">
+    <input matInput [matDatepicker]="dp" placeholder="Nap" [min]="minDate" [formControl]="date" (dateChange)="dateChange($event)">
     <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
     <mat-datepicker #dp></mat-datepicker>
   </mat-form-field>
-  <div *ngFor="let type of foodTypes">
-    {{type.value}}
-  </div>
+  <table *ngIf="false" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Étel neve </th>
+      <td mat-cell *matCellDef="let entry"> {{entry.food.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> Ár </th>
+      <td mat-cell *matCellDef="let entry">
+        <mat-form-field>
+          <input matInput type="number" [(ngModel)]="entry.price" (blur)="menuService.updatePrice()">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef > Törlés </th>
+        <td mat-cell *matCellDef="let entry" >
+          <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="menuService.removeFood(entry)">delete</mat-icon>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-card *ngFor="let categories of menu">
+    <mat-card-header>
+      <mat-card-title>{{ categories.foodType.value }}ek</mat-card-title>
+    </mat-card-header>
+
+    <div *ngIf="categories.entries.length === 0">Még nincs {{ categories.foodType.value | lowercase}} hozzáadva az étlaptervhez!</div>
+
+    <mat-accordion >
+      <mat-expansion-panel *ngFor="let entry of categories.entries">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+              {{ entry.food.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="entry.food.history.length === 0; else elseBlock">Nem áll rendelkezésre adat erről az ételről</div>
+        <ng-template #elseBlock>
+          {{ fromNow(entry.food.history[0].date) }} szerepelt legutoljára az étlapon,
+          {{ entry.food.history[0].price }} forintos árral.
+        </ng-template>
+
+        <mat-form-field>
+          <input matInput type="number" [(ngModel)]="entry.price" (blur)="menuService.updatePrice()">
+        </mat-form-field>
+
+        <mat-action-row>
+          <button mat-raised-button color="warn" (click)="menuService.removeFood(entry)">TÖRÖL</button>
+        </mat-action-row>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+
+  <button *ngIf="menuService.entries$.value.length > 0" mat-raised-button color="warn" (click)="menuService.resetMenu()">ELVET</button>
+  <button *ngIf="menuService.entries$.value.length > 0" mat-raised-button color="primary" (click)="saveMenu()">MENTÉS</button>
+
 </div>

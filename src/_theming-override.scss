@@ -1,0 +1,14 @@
+@mixin mat-card-theme-override($theme) {
+  //$background: map-get($theme, background);
+  //$foreground: map-get($theme, foreground);
+
+  .mat-card {
+    background: mat-color(white);
+    color: mat-color($foreground, text);
+
+  }
+
+  .mat-card-subtitle {
+    color: mat-color($foreground, secondary-text);
+  }
+}

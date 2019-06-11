@@ -1,0 +1,50 @@
+@import '~@angular/material/theming';
+@import './theming-override';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+$corso-typography-config: mat-typography-config('Montserrat, sans-serif');
+@include mat-core($corso-typography-config);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$corso-app-primary: mat-palette($mat-green, 700, 900);
+$corso-app-accent:  mat-palette($mat-orange, A200, A100, A400);
+
+@function corso-mat-theme-foreground($color) {
+  @return (
+      base:              $color,
+      divider:           $black-12-opacity,
+      dividers:          $black-12-opacity,
+      disabled:          rgba($color, 0.38),
+      disabled-button:   rgba($color, 0.38),
+      disabled-text:     rgba($color, 0.38),
+      hint-text:         rgba($color, 0.38),
+      secondary-text:    rgba($color, 0.54),
+      icon:              rgba($color, 0.54),
+      icons:             rgba($color, 0.54),
+      text:              rgba($color, 0.87),
+      slider-off:        rgba($color, 0.26),
+      slider-off-active: rgba($color, 0.38),
+  );
+};
+
+@function corso-mat-theme-background($color) {
+  @return (
+    app-bar:    $color,
+    card:       $color,
+    dialog:     $color
+  );
+};
+
+$foreground: corso-mat-theme-foreground(mat-color($mat-green, 900));
+$background: corso-mat-theme-background(#FFFBE6);
+
+$corso-app-theme: mat-light-theme($corso-app-primary, $corso-app-accent);
+
+$my-app-theme-custom: map-merge($corso-app-theme, (foreground: $foreground, background: $background));
+
+@include angular-material-theme($my-app-theme-custom);

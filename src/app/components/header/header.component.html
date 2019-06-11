@@ -1,4 +1,4 @@
-<mat-toolbar color="primary"  *ngIf="authService.isAuthenticated()">
+<mat-toolbar *ngIf="authService.isAuthenticated()">
   <span routerLink='/'>Corso</span>
   <span class="spacer"></span>
   <button mat-button routerLink='/menu'>Étlap</button>
@@ -6,4 +6,3 @@
   <button mat-button primary (click)=openNewFoodDialog()>Új étel</button>
   <button *ngIf="authService.isAuthenticated()" mat-button (click)="logout()">Kilépés</button>
 </mat-toolbar>
-

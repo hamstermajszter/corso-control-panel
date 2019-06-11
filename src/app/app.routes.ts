@@ -9,5 +9,5 @@ export const ROUTES: Routes = [
   { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
   { path: 'foods', component: FoodsComponent, canActivate: [AuthGuard] },
   { path: 'foods/:id', component: FoodsComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'food' }
+  { path: '**', redirectTo: 'foods' }
 ];

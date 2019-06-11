@@ -25,8 +25,7 @@ export class HeaderComponent implements OnInit {
   }
   openNewFoodDialog(): void {
     const dialogRef = this.dialog.open(FoodDialogComponent, {
-      width: '350px',
-      data: {food: {id: '', name: '', allergens: []}}
+      data: {food: {id: '', name: '', allergens: [], history: []}}
     });
   }
 }

@@ -1,4 +1,11 @@
+import { Food } from './food.model';
+
 export class Menu {
   id: string;
-  foods: Array<string>;
+  entries: Array<MenuEntry>;
+}
+
+export class MenuEntry {
+  food: Food;
+  price: number;
 }

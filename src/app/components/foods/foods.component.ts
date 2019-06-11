@@ -7,6 +7,7 @@ import { FoodService } from '@/services/food.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoodDialogComponent } from './food-dialog/food-dialog.component';
 import { Food } from '@/models/food.model';
+import { MenuService } from '@/services/menu.service';
 
 export interface Allergen { id: string; name: string; }
 
@@ -31,6 +32,7 @@ export class FoodsComponent implements OnInit {
   constructor(
     private afs: AngularFirestore,
     private foodService: FoodService,
+    private menuService: MenuService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private router: Router,
@@ -50,7 +52,6 @@ export class FoodsComponent implements OnInit {
 
   openFoodDialog(food: Food): void {
     const dialogRef = this.dialog.open(FoodDialogComponent, {
-      width: '350px',
       data: {food}
     });
 
@@ -59,10 +60,22 @@ export class FoodsComponent implements OnInit {
     });
   }
 
-  deleteFood(id: string) {
-    this.foodCollection.doc(id).delete().then(() => {
+  addFoodToMenu(food: Food): void {
+    this.menuService.addFood(food).then(message => {
+      this.snackBar.open(message, '', {
+        duration: 5000
+      });
+    }).catch(errorMessage => {
+      this.snackBar.open(errorMessage, '', {
+        duration: 5000
+      });
+    });
+  }
+
+  deleteFood(food: Food) {
+    this.foodService.deleteFood(food).then(() => {
       this.snackBar.open('Étel sikeresen törölve!', '', {
-        duration: 3000
+        duration: 5000
       });
     });
   }

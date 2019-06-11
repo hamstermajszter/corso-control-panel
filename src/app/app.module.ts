@@ -27,6 +27,9 @@ import {
   MatDialogModule,
   MatButtonToggleModule,
   MatDatepickerModule,
+  MatTableModule,
+  MatIconModule,
+  MatSidenavModule,
   MAT_DATE_LOCALE,
   DateAdapter,
   MAT_DATE_FORMATS
@@ -48,7 +51,6 @@ import { MenuComponent } from './components/menu/menu.component';
     AngularFireStorageModule,
     RouterModule.forRoot(ROUTES, { useHash: false }),
     BrowserAnimationsModule,
-
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -60,7 +62,10 @@ import { MenuComponent } from './components/menu/menu.component';
     MatDialogModule,
     MatButtonToggleModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatTableModule,
+    MatIconModule,
+    MatSidenavModule
   ],
   declarations: [
     AppComponent,

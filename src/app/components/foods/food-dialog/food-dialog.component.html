@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="createFood()" class="new-food-form">
+<form [formGroup]="form" (ngSubmit)="saveFood()" class="new-food-form">
   <mat-form-field>
     <input id="food-name" matInput placeholder="Étel neve" [formControl]="form.controls.name" required>
   </mat-form-field>

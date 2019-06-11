@@ -1,7 +1,14 @@
-[id=menu] {
-  float: left;
-}
+#menu {
+  padding: 30px;
+  max-width: 700px;
+  margin: auto;
 
-#foods {
-  float: right;
+  mat-card {
+    margin-bottom: 20px;
+  }
+
+  mat-form-field {
+    display: block;
+  }
+
 }
