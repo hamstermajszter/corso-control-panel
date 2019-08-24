@@ -3,6 +3,7 @@ import { AuthenticationService } from '@/services/auth.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { FoodDialogComponent } from '../foods/food-dialog/food-dialog.component';
+import { MenuService } from '@/services/menu.service';
 
 @Component({
   selector: 'app-header',
@@ -11,20 +12,27 @@ import { FoodDialogComponent } from '../foods/food-dialog/food-dialog.component'
 })
 export class HeaderComponent implements OnInit {
 
+  numberOfFoodsOnMenu: number;
+
   constructor(
     private authService: AuthenticationService,
+    private menuService: MenuService,
     private router: Router,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
+    this.menuService.entries$.subscribe(entries => {
+      this.numberOfFoodsOnMenu = entries.length;
+    });
   }
 
   logout() {
     this.authService.logout().then(() => this.router.navigate(['/login']));
   }
+
   openNewFoodDialog(): void {
-    const dialogRef = this.dialog.open(FoodDialogComponent, {
+    this.dialog.open(FoodDialogComponent, {
       data: {food: {id: '', name: '', allergens: [], history: []}}
     });
   }

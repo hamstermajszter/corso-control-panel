@@ -25,11 +25,12 @@ import {
   MatCheckboxModule,
   MatSnackBarModule,
   MatDialogModule,
+  MatBadgeModule,
   MatButtonToggleModule,
   MatDatepickerModule,
   MatTableModule,
+  MatListModule,
   MatIconModule,
-  MatSidenavModule,
   MAT_DATE_LOCALE,
   DateAdapter,
   MAT_DATE_FORMATS
@@ -38,6 +39,8 @@ import { MatMomentDateModule, MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from 
 import { HeaderComponent } from './components/header/header.component';
 import { FoodDialogComponent } from './components/foods/food-dialog/food-dialog.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { FilterComponent } from './components/foods/filter/filter.component';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   imports: [
@@ -60,12 +63,14 @@ import { MenuComponent } from './components/menu/menu.component';
     MatToolbarModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatBadgeModule,
+    MatListModule,
     MatButtonToggleModule,
     MatDatepickerModule,
     MatMomentDateModule,
     MatTableModule,
     MatIconModule,
-    MatSidenavModule
+    OverlayModule
   ],
   declarations: [
     AppComponent,
@@ -74,6 +79,7 @@ import { MenuComponent } from './components/menu/menu.component';
     HeaderComponent,
     FoodDialogComponent,
     MenuComponent,
+    FilterComponent
   ],
   entryComponents: [
     FoodDialogComponent

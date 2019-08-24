@@ -5,6 +5,7 @@ import { MenuService } from '@/services/menu.service';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
 import { MatTableDataSource, MatSnackBar } from '@angular/material';
+import { Menu } from '@/models/menu.model';
 
 export interface MenuEntry {
   food: Food;
@@ -18,22 +19,19 @@ export interface MenuEntry {
 })
 export class MenuComponent implements OnInit {
   date = new FormControl(moment());
-  minDate = moment();
-  displayedColumns: string[] = ['name', 'price', 'delete'];
-  dataSource: MatTableDataSource<any>;
   foodTypes = _.zipWith(Object.keys(FoodType), Object.values(FoodType), (key, value) => {
     return {key, value};
   });
   menu: Array<{foodType: {key: string, value: string}, entries: Array<MenuEntry>}>;
+  menus: Array<Menu>;
 
   constructor(
     private menuService: MenuService,
     private snackBar: MatSnackBar
-  ) {
-    this.menuService.entries$.subscribe(() => this.refresh());
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.menuService.menus$.subscribe(menus => this.menus = menus);
     this.menuService.entries$.subscribe((menuEntries: Array<MenuEntry>) => {
       this.menu = [];
       _.map(this.foodTypes, foodType => {
@@ -51,13 +49,8 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  refresh() {
-    this.dataSource = new MatTableDataSource(this.menuService.entries$.value);
-  }
-
-  dateChange(event) {
-    console.log(moment().isBefore(event.value));
-
+  selectMenu(id: string) {
+    this.menuService.loadMenu(id);
   }
 
   fromNow(date: string) {

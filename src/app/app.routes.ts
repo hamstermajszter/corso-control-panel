@@ -5,6 +5,7 @@ import { FoodsComponent } from './components/foods/foods.component';
 import { MenuComponent } from './components/menu/menu.component';
 
 export const ROUTES: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: AuthComponent },
   { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
   { path: 'foods', component: FoodsComponent, canActivate: [AuthGuard] },

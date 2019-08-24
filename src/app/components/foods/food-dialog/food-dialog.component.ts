@@ -47,7 +47,8 @@ export class FoodDialogComponent implements OnInit {
       this.food.id = this.food.id || this.afs.createId();
       this.food.name = this.form.value.name;
       this.food.type = this.form.value.type;
-      this.food.allergens = _.filter(this.form.get('allergens').value as FormArray, allergen => allergen.selected);
+      const selectedAllergens = _.filter(this.form.get('allergens').value as FormArray, allergen => allergen.selected);
+      this.food.allergens = _.map(selectedAllergens, allergen => allergen.id);
       this.foodService.saveFood(this.food).then(() => {
         this.snackBar.open(`${this.food.name} sikeresen hozzáadva!`, '', {
           duration: 3000

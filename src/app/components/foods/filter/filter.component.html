@@ -1,0 +1,33 @@
+<form [formGroup]="form">
+
+  <mat-card id="filter">
+    <mat-card-header>
+      <mat-card-title>Szűrő</mat-card-title>
+    </mat-card-header>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Típus
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-button-toggle-group name="type" aria-label="Étel típusa" >
+          <mat-button-toggle *ngFor="let type of foodTypes" value="{{type.key}}">{{type.value}}</mat-button-toggle>
+        </mat-button-toggle-group>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Allergének
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div formArrayName="allergens"
+          *ngFor="let allergen of form.get('allergens').controls; let i = index;">
+          <div [formGroupName]="i">
+            <mat-checkbox formControlName="selected">{{ allergen.value.displayedName }}</mat-checkbox>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+</form>

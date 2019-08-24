@@ -30,8 +30,6 @@ export class FoodService {
   }
 
   deleteFood(food: Food) {
-    console.log(food.id);
-
     return this.foodCollection.doc(food.id).delete().then(data => console.log(data));
   }
 }
